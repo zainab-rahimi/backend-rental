@@ -31,4 +31,13 @@ build/
 
 ### VS Code ###
 .vscode/
+### config file
 src/main/resources/application.properties
+
+### secrets and env variables
+.env
+.env.local
+
+
+## uploads and artifacts
+*.keystore
