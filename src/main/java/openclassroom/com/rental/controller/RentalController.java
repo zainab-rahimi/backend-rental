@@ -33,7 +33,10 @@ public class RentalController {
         this.fileStorageService = fileStorageService;
     }
     @GetMapping
-    public ResponseEntity<ListRentalResponse> getAllRentals() {
+    public ResponseEntity<ListRentalResponse> getAllRentals(Authentication authentication) {
+        if (authentication == null || authentication.getName() == null) {
+            throw new UnauthorizedException("Not authenticated");
+        }
         List<Rental> rentals = rentalService.findAllRentals();
         List<RentalResponse> rentalResponses = rentals.stream()
                 .map(this::convertToResponse)
@@ -54,7 +57,10 @@ public class RentalController {
         return response;
     }
     @GetMapping("/{id}")
-    public ResponseEntity<RentalResponse> getRentalById(@PathVariable Integer id) {
+    public ResponseEntity<RentalResponse> getRentalById(@PathVariable Integer id, Authentication authentication) {
+        if (authentication == null || authentication.getName() == null) {
+            throw new UnauthorizedException("Not authenticated");
+        }
         Rental rental = rentalService.findRentalById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Rental not found with id: " + id));
         RentalResponse response = convertToResponse(rental);
