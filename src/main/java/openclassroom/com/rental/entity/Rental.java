@@ -1,10 +1,11 @@
 package openclassroom.com.rental.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Table (name = "rentals")
@@ -24,8 +25,10 @@ public class Rental {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
     @Column(name = "create_at")
+    @JsonProperty("created_at")
     private Timestamp createdAt;
     @Column(name = "updated_at")
+    @JsonProperty("updated_at")
     private Timestamp updatedAt;
 
     public Integer getId() {
@@ -93,7 +96,7 @@ public class Rental {
     }
 
     public Timestamp getUpdatedAt() {
-        return this.updatedAt = new Timestamp(System.currentTimeMillis());
+        return updatedAt;
     }
 
     public void setUpdatedAt(Timestamp updatedAt) {

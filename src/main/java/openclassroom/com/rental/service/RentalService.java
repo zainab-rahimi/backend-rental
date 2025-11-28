@@ -2,18 +2,20 @@ package openclassroom.com.rental.service;
 
 import openclassroom.com.rental.entity.Rental;
 import openclassroom.com.rental.repository.RentalRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class RentalService {
 
-    @Autowired
-    private RentalRepository rentalRepository;
+    private final RentalRepository rentalRepository;
+
+    public RentalService(RentalRepository rentalRepository) {
+        this.rentalRepository = rentalRepository;
+    }
 
     @Transactional(readOnly = true)
     public List<Rental> findAllRentals() {
@@ -25,10 +27,12 @@ public class RentalService {
         return rentalRepository.findById(id);
     }
 
+    @Transactional
     public Rental saveRental(Rental rental) {
         return rentalRepository.save(rental);
     }
 
+    @Transactional
     public void deleteRental(Integer id) {
         rentalRepository.deleteById(id);
     }
